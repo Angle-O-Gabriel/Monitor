@@ -15,7 +15,7 @@ public class InventoryManager : MonoBehaviour
 
     private static List<Sprite> photoSprites = new List<Sprite>();
 
-    private bool menuActivated;
+    public bool menuActivated;
 
     // Start is called before the first frame update
     void Start()
@@ -54,5 +54,4 @@ public class InventoryManager : MonoBehaviour
         photoSprites.Clear();
         Debug.Log("Photo Album cleared.");
     }
-
 }

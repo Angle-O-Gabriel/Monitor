@@ -46,7 +46,7 @@ public class PhotoCapture : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (!viewingPhoto && Time.time - lastPhotoTime > photoCooldown)
+            if (!viewingPhoto && Time.time - lastPhotoTime > photoCooldown && !inventoryManager.menuActivated)
             {
                 if(shotsRemaining != 0)
                 {
