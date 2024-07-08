@@ -90,6 +90,7 @@ public class PhotoCapture : MonoBehaviour
 
         //ADD THIS
         screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+        GameEventsManager.Instance.miscEvents.PictureTook();
     }
 
     IEnumerator CameraFlashEffect()
