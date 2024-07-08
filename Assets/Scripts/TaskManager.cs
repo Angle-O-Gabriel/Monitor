@@ -12,7 +12,7 @@ public class TaskManager : MonoBehaviour
     bool homeScreen = false;
     bool tasksScreen = false;
     bool bankScreen = false;
-    bool gallery = false;
+    //bool gallery = false;
 
     public void HomeButton()
     {
