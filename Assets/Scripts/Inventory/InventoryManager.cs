@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    [Header("Inventory Panel")]
-    [SerializeField]public GameObject InventoryMenu;
+    [Header("Inventory Canvas")]
+    [SerializeField]public GameObject InventoryCanvas;
 
     [Header("Inventory Slots")]
     [SerializeField] ItemSlot[] ItemSlot;
@@ -18,7 +18,7 @@ public class InventoryManager : MonoBehaviour
 
     private static List<Sprite> photoSprites = new List<Sprite>();
 
-    public bool menuActivated;
+    public bool menuActivated = false;
 
     // Start is called before the first frame update
     void Start()
@@ -34,10 +34,9 @@ public class InventoryManager : MonoBehaviour
             toggleInventory();
         }
     }
-
     public void toggleInventory()
     {
-        InventoryMenu.SetActive(!menuActivated);
+        InventoryCanvas.SetActive(!menuActivated);
         CameraCanvas.SetActive(menuActivated);
         UICanvas.SetActive(menuActivated);
         menuActivated = !menuActivated;

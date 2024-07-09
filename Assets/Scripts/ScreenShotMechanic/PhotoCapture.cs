@@ -11,6 +11,7 @@ public class PhotoCapture : MonoBehaviour
     [SerializeField] private GameObject photoFrame;
     [SerializeField] private GameObject cameraUI;
     [SerializeField] TextMeshProUGUI ShotsRemainingDisplay;
+    [SerializeField] private TextMeshProUGUI notifier;
 
     [Header("Flash Effect")]
     [SerializeField] private GameObject cameraFlash;
@@ -35,7 +36,6 @@ public class PhotoCapture : MonoBehaviour
     [Header("UI Manager")]
     [SerializeField] private UIScript UIManager;
 
-
     private Texture2D screenCapture;
     private bool viewingPhoto;
     private int shotsRemaining;
@@ -47,6 +47,7 @@ public class PhotoCapture : MonoBehaviour
         screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
 
         ShotsRemainingDisplay.text = $"{(shotsAvailable - shotsRemaining)}/{shotsAvailable}";
+
     }
 
     private void Update()
@@ -55,13 +56,8 @@ public class PhotoCapture : MonoBehaviour
         {
             if (!viewingPhoto && Time.time - lastPhotoTime > photoCooldown && !inventoryManager.menuActivated && !UIManager.taskPanelisOpen)
             {
-                if(shotsRemaining != 0)
-                {
-                    StartCoroutine(CapturePhoto());
-                    lastPhotoTime = Time.time; // Update the last photo time
-                    shotsRemaining--;
-                    ShotsRemainingDisplay.text = $"{(shotsAvailable - shotsRemaining)}/{shotsAvailable}";
-                }    
+                TakePhoto();
+
             }
             else if (viewingPhoto)
             {
@@ -70,10 +66,20 @@ public class PhotoCapture : MonoBehaviour
         }
     }
 
+    public void TakePhoto()
+    {
+        if (shotsRemaining != 0)
+        {
+            StartCoroutine(CapturePhoto());
+            lastPhotoTime = Time.time; // Update the last photo time
+            shotsRemaining--;
+            ShotsRemainingDisplay.text = $"{(shotsAvailable - shotsRemaining)}/{shotsAvailable}";
+        }
+    }
     IEnumerator CapturePhoto()
     {
         cameraUI.SetActive(false);
-        UICanvas.SetActive(false);
+        UICanvas.GetComponent<CanvasGroup>().alpha = 0f;
         viewingPhoto = true;
 
         yield return new WaitForEndOfFrame();
@@ -96,6 +102,7 @@ public class PhotoCapture : MonoBehaviour
         StartCoroutine(CameraFlashEffect());
         fadingAnimation.Play("PhotoFade");
 
+        LeanTween.alphaCanvas(notifier.GetComponent<CanvasGroup>(), 1f, 1f).setDelay(1f);
         //ADD THIS
         screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
         GameEventsManager.Instance.miscEvents.PictureTook();
@@ -112,7 +119,8 @@ public class PhotoCapture : MonoBehaviour
     {
         viewingPhoto = false;
         photoFrame.SetActive(false);
-        UICanvas.SetActive(true);
+        UICanvas.GetComponent<CanvasGroup>().alpha = 1f;
         cameraUI.SetActive(true);
+        notifier.GetComponent<CanvasGroup>().alpha = 0f;
     }
 }

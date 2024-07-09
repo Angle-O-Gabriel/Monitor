@@ -58,6 +58,7 @@ public class QuestPoint : MonoBehaviour
         }
         else if(currentQuestState.Equals(QuestState.CAN_FINISH) && finishpoint)
         {
+            Debug.Log("button to finish quest pressed");
             GameEventsManager.Instance.questEvents.FinishQuest(questId);
         }
     }

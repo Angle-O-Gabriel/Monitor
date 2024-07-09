@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
+using TMPro;
 
 public class QuestManager : MonoBehaviour
 {
+    [Header("Bank stuff (temp stuff)")]
+    [SerializeField] private TextMeshProUGUI balance;
     private Dictionary<string, Quest> questMap;
 
     private void Awake()
@@ -106,7 +110,15 @@ public class QuestManager : MonoBehaviour
 
     private void FinishQuest(string id)
     {
+        Quest quest = GetQuestById(id);
+        ClaimRewards(quest);
+        ChangeQuestState(quest.info.id, QuestState.FINISHED);
         Debug.Log("Finish Quest: " + id);
+    }
+
+    private void ClaimRewards(Quest quest)
+    {
+        balance.text = "balance : $" + quest.info.MoneyReward.ToString();
     }
 
     private Dictionary<string, Quest> CreateQuestMap()

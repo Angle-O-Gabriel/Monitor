@@ -5,12 +5,10 @@ using UnityEngine;
 public class TaskManager : MonoBehaviour
 {
     public GameObject HomeWarning;
-    public GameObject TaskScreen;
     public GameObject BankScreen;
     public GameObject GalleryScreen;
 
     bool homeScreen = false;
-    bool tasksScreen = false;
     bool bankScreen = false;
     //bool gallery = false;
 
@@ -24,20 +22,6 @@ public class TaskManager : MonoBehaviour
         {
            homeScreen = false;
             HomeWarning.SetActive(false);
-        }
-    }
-
-    public void TaskButton()
-    {
-        if (!tasksScreen)
-        {
-            tasksScreen = true;
-            TaskScreen.SetActive(true);
-        }
-        else
-        {
-            tasksScreen = false;
-            TaskScreen.SetActive(false);
         }
     }
 

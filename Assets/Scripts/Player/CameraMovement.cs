@@ -13,5 +13,19 @@ public class CameraMovement : MonoBehaviour
         float horizontalRotation = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
         transform.Rotate(Vector3.up, horizontalRotation);
     }
+
+    public void turnRight()
+    {
+        float currentYRotation = gameObject.transform.eulerAngles.y;
+        float targetYRotation = currentYRotation + 45f;
+        LeanTween.rotateY(gameObject, targetYRotation, 0.5f).setEase(LeanTweenType.easeOutExpo);
+    }
+
+    public void turnLeft()
+    {
+        float currentYRotation = gameObject.transform.eulerAngles.y;
+        float targetYRotation = currentYRotation - 45f;
+        LeanTween.rotateY(gameObject, targetYRotation, 0.5f).setEase(LeanTweenType.easeOutExpo);
+    }
 }
 
