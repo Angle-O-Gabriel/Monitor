@@ -7,14 +7,19 @@ public abstract class QuestStep : MonoBehaviour
 {
     private bool isFinished = false;
 
+    private string questId;
+
+    public void InitializeQuestStep(string  questId)
+    {
+        this.questId = questId;
+    }
     protected void FinishQuestStep()
     {
         if(!isFinished)
         {
             isFinished = true;
-
-            // TO-D0 : Advance the quest forwards now that we've finished this step
-
+            GameEventsManager.Instance.questEvents.AdvanceQuest(questId);
+            Debug.Log("Advanced Quest");
             Destroy(this.gameObject);
         }
     }

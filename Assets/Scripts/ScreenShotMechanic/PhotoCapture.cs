@@ -28,8 +28,15 @@ public class PhotoCapture : MonoBehaviour
 
     [Header("Inventory Manager")]
     [SerializeField] private InventoryManager inventoryManager;
-    private Texture2D screenCapture;
 
+    [Header("UI Canvas")]
+    [SerializeField] private GameObject UICanvas;
+
+    [Header("UI Manager")]
+    [SerializeField] private UIScript UIManager;
+
+
+    private Texture2D screenCapture;
     private bool viewingPhoto;
     private int shotsRemaining;
     private int shotsAvailable = 6;
@@ -46,7 +53,7 @@ public class PhotoCapture : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (!viewingPhoto && Time.time - lastPhotoTime > photoCooldown && !inventoryManager.menuActivated)
+            if (!viewingPhoto && Time.time - lastPhotoTime > photoCooldown && !inventoryManager.menuActivated && !UIManager.taskPanelisOpen)
             {
                 if(shotsRemaining != 0)
                 {
@@ -66,6 +73,7 @@ public class PhotoCapture : MonoBehaviour
     IEnumerator CapturePhoto()
     {
         cameraUI.SetActive(false);
+        UICanvas.SetActive(false);
         viewingPhoto = true;
 
         yield return new WaitForEndOfFrame();
@@ -104,6 +112,7 @@ public class PhotoCapture : MonoBehaviour
     {
         viewingPhoto = false;
         photoFrame.SetActive(false);
+        UICanvas.SetActive(true);
         cameraUI.SetActive(true);
     }
 }

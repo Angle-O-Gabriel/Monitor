@@ -13,6 +13,9 @@ public class InventoryManager : MonoBehaviour
     [Header("Camera - Canvas")]
     [SerializeField]public GameObject CameraCanvas;
 
+    [Header("UI - Canvas")]
+    [SerializeField] public GameObject UICanvas;
+
     private static List<Sprite> photoSprites = new List<Sprite>();
 
     public bool menuActivated;
@@ -28,13 +31,17 @@ public class InventoryManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            InventoryMenu.SetActive(!menuActivated);
-            CameraCanvas.SetActive(menuActivated);
-            menuActivated = !menuActivated;
-            
+            toggleInventory();
         }
     }
 
+    public void toggleInventory()
+    {
+        InventoryMenu.SetActive(!menuActivated);
+        CameraCanvas.SetActive(menuActivated);
+        UICanvas.SetActive(menuActivated);
+        menuActivated = !menuActivated;
+    }
     public void AddPhotoSprite(Sprite photoSprite)
     {
         for (int i = 0; i < ItemSlot.Length; i++)
