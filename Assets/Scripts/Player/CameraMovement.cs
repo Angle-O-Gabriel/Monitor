@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
+        if (EventSystem.current.currentSelectedGameObject != null) return;
         // Rotation Left & Right
 
         float horizontalRotation = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (EventSystem.current.currentSelectedGameObject != null) return;
+
         //this.transform.position = Waypoint.current.transform.position;
         Vector3 currentPosition = transform.position;
         Vector3 newTargetPosition = Waypoint.current.transform.position;
