@@ -166,7 +166,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   photoSprite: {fileID: 0}
-  isFull: 0
+  hasPhoto: 0
+  photoTexture: {fileID: 0}
   itemImage: {fileID: 3461340089379377845}
 --- !u!1 &7511172084055999570
 GameObject:

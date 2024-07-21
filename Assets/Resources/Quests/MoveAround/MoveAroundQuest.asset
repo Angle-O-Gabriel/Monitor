@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c32bee7343eece94b9cde03c2915bd9a, type: 3}
-  m_Name: TakePictureQuest
+  m_Name: MoveAroundQuest
   m_EditorClassIdentifier: 
-  <id>k__BackingField: TakePictureQuest
-  displayName: Take a Picture
-  clientName: Tutorial
-  location: Park
-  description: title lmao
+  <id>k__BackingField: MoveAroundQuest
+  displayName: Move Around
+  clientName: Abegail
+  location: floor
+  description: go there
   difficulty: '*'
   questPrerequisites: []
   questStepPrefabs:
-  - {fileID: 8874122038243837753, guid: 766639058cf88084090ec042f65eba3b, type: 3}
-  MoneyReward: 100
+  - {fileID: 3050015493403684560, guid: 25113af5492be4d4bbd4819703097bc2, type: 3}
+  MoneyReward: 200

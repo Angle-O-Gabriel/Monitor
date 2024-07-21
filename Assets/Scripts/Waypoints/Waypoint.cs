@@ -16,7 +16,17 @@ public class Waypoint : MonoBehaviour, IPointerClickHandler
         if (is_starting)
         {
             current = this;
-        }    
+        }
+
+        // Start the floating animation
+        StartFloatingAnimation();
+    }
+
+    // Function to start the floating animation
+    private void StartFloatingAnimation()
+    {
+        // LeanTween floating animation
+        LeanTween.moveLocalY(gameObject, transform.localPosition.y + 0.1f, 1f).setLoopPingPong();
     }
 
     // Start is called before the first frame update

@@ -8,7 +8,7 @@ public class GameEventsManager : MonoBehaviour
 
     public MiscEvents miscEvents;
     public QuestEvents questEvents;
-
+    public MoneyEvents moneyEvents;
     private void Awake()
     {
         if(Instance != null)
@@ -19,5 +19,6 @@ public class GameEventsManager : MonoBehaviour
         Instance = this;
         miscEvents = new MiscEvents();
         questEvents = new QuestEvents();
+        moneyEvents = new MoneyEvents();
     }
 }

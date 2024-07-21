@@ -118,7 +118,10 @@ public class QuestManager : MonoBehaviour
 
     private void ClaimRewards(Quest quest)
     {
-        balance.text = "balance : $" + quest.info.MoneyReward.ToString();
+        int reward = quest.info.MoneyReward;
+        GameEventsManager.Instance.moneyEvents.MoneyGained(reward);
+
+        //balance.text = "balance : $" + quest.info.MoneyReward.ToString();
     }
 
     private Dictionary<string, Quest> CreateQuestMap()

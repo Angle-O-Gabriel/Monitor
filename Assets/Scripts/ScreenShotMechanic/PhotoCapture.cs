@@ -30,16 +30,14 @@ public class PhotoCapture : MonoBehaviour
     [Header("Inventory Manager")]
     [SerializeField] private InventoryManager inventoryManager;
 
-    [Header("UI Canvas")]
-    [SerializeField] private GameObject UICanvas;
-
-    [Header("UI Manager")]
-    [SerializeField] private UIScript UIManager;
+    [Header("Waypoints")]
+    [SerializeField] private GameObject wayPoints;
 
     private Texture2D screenCapture;
     private bool viewingPhoto;
     private int shotsRemaining;
     private int shotsAvailable = 6;
+
     private void Start()
     {
         shotsRemaining = shotsAvailable;
@@ -50,38 +48,43 @@ public class PhotoCapture : MonoBehaviour
 
     }
 
+    private void OnEnable()
+    {
+        GameEventsManager.Instance.miscEvents.onTakePicture += TakePhoto;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.Instance.miscEvents.onTakePicture -= TakePhoto;
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!viewingPhoto && Time.time - lastPhotoTime > photoCooldown && !inventoryManager.menuActivated && !UIManager.taskPanelisOpen)
-            {
-                TakePhoto();
+    }
 
+    private void TakePhoto()
+    {
+        if (shotsRemaining != 0)
+        {
+            if (!viewingPhoto && Time.time - lastPhotoTime > photoCooldown)
+            {
+                StartCoroutine(CapturePhoto());
+                lastPhotoTime = Time.time; // Update the last photo time
+                shotsRemaining--;
+                ShotsRemainingDisplay.text = $"{(shotsAvailable - shotsRemaining)}/{shotsAvailable}";
+                viewingPhoto = true;
             }
             else if (viewingPhoto)
             {
+                viewingPhoto = false;
                 RemovePhoto();
             }
         }
     }
-
-    public void TakePhoto()
-    {
-        if (shotsRemaining != 0)
-        {
-            StartCoroutine(CapturePhoto());
-            lastPhotoTime = Time.time; // Update the last photo time
-            shotsRemaining--;
-            ShotsRemainingDisplay.text = $"{(shotsAvailable - shotsRemaining)}/{shotsAvailable}";
-        }
-    }
-    IEnumerator CapturePhoto()
+    private IEnumerator CapturePhoto()
     {
         cameraUI.SetActive(false);
-        UICanvas.GetComponent<CanvasGroup>().alpha = 0f;
-        viewingPhoto = true;
-
+        wayPoints.SetActive(false);
         yield return new WaitForEndOfFrame();
 
         Rect regionToRead = new Rect (0, 0, Screen.width,Screen.height);
@@ -91,7 +94,7 @@ public class PhotoCapture : MonoBehaviour
         ShowPhoto();
     }
 
-    void ShowPhoto()
+    private void ShowPhoto()
     {
         Sprite photoSprite = Sprite.Create(screenCapture, new Rect(0.0f, 0.0f, screenCapture.width, screenCapture.height), new Vector2(0.5f, 0.5f), 100.0f);
         photoDisplayArea.sprite = photoSprite;
@@ -108,19 +111,18 @@ public class PhotoCapture : MonoBehaviour
         GameEventsManager.Instance.miscEvents.PictureTook();
     }
 
-    IEnumerator CameraFlashEffect()
+    private IEnumerator CameraFlashEffect()
     {
         cameraAudio.Play();
         cameraFlash.SetActive(true);
         yield return new WaitForSeconds(flashTime);
         cameraFlash.SetActive(false);
-    }    
-    void RemovePhoto()
+    }
+    private void RemovePhoto()
     {
-        viewingPhoto = false;
         photoFrame.SetActive(false);
-        UICanvas.GetComponent<CanvasGroup>().alpha = 1f;
         cameraUI.SetActive(true);
+        wayPoints.SetActive(true);
         notifier.GetComponent<CanvasGroup>().alpha = 0f;
     }
 }
