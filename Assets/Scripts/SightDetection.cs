@@ -9,7 +9,7 @@ public class SightDetection : MonoBehaviour
         // Check if the entering collider has the tag we are looking for
         if (other.CompareTag(targetTag))
         {
-            isDetected = true;
+            //isDetected = true;
             Debug.Log(targetTag + " detected!");
         }
     }
